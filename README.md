@@ -54,7 +54,7 @@ The execution time for each algorithm.
 **Performance Comparison**
 The project includes a comparison of the performance of the algorithms using both Adjacency Matrix and Adjacency List representations. The results are presented in a tabular format, highlighting the differences in execution time for sparse and dense graphs.
 
-**Contributing**
+##**Contributing**
 Contributions are welcome! If you'd like to contribute, please follow these steps:
 
 Fork the repository.
@@ -64,11 +64,11 @@ Create a new branch for your feature or bugfix.
 Commit your changes.
 
 Submit a pull request.
-
+---
 License
 This project is licensed under the MIT License. See the LICENSE file for details.
 
-Acknowledgments
+**Acknowledgments**
 This project was developed as part of an advanced algorithms course.
 
 Special thanks to Dr. Amanj Khoramian for guidance and support.
