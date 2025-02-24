@@ -1,59 +1,73 @@
+import java.util.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+public class Graph {
+    private int numNodes; // Number of nodes in the graph
+    private boolean[][] adjacencyMatrix; // Adjacency matrix representation
+    private List<List<Integer>> adjacencyList; // Adjacency list representation
+//1->6,7,8,0
+    // Constructor to initialize the graph
+    public Graph(int numNodes, boolean isDirected, double edgeProbability) {
+        this.numNodes = numNodes;
+        adjacencyMatrix = new boolean[numNodes][numNodes];
+        adjacencyList = new ArrayList<>(numNodes);
 
-public class graph {
-    private final int nodes;
-    private final boolean directed;
-    private final boolean[][] adjacencyMatrix;
-    private final List<List<Integer>> adjacencyList;
-
-    public graph(int nodes, boolean directed) {
-        this.nodes = nodes;
-        this.directed = directed;
-        this.adjacencyMatrix = new boolean[nodes][nodes];
-        this.adjacencyList = new ArrayList<>(nodes);
-        for (int i = 0; i < nodes; i++) {
+        // Initialize adjacency list
+        for (int i = 0; i < numNodes; i++) {
             adjacencyList.add(new ArrayList<>());
         }
-    }
 
-    public void addEdge(int src, int dest) {
-        adjacencyMatrix[src][dest] = true;
-        adjacencyList.get(src).add(dest);
-        if (!directed) {
-            adjacencyMatrix[dest][src] = true;
-            adjacencyList.get(dest).add(src);
+        // Generate random edges
+        Random random = new Random();
+        for (int u = 0; u < numNodes; u++) {
+            for (int v = 0; v < numNodes; v++) {
+                if (u != v && random.nextDouble() < edgeProbability) {
+                    addEdge(u, v, isDirected);
+                }
+            }
         }
     }
 
+    // Add an edge to the graph
+    private void addEdge(int u, int v, boolean isDirected) {
+        adjacencyMatrix[u][v] = true; // Add edge in adjacency matrix
+        adjacencyList.get(u).add(v); // Add edge in adjacency list
+
+        if (!isDirected) {//la halatekda agar edge akaman arastay nabw wata bidirectional bw 
+            adjacencyMatrix[v][u] = true; // Add reverse edge for undirected graph
+            adjacencyList.get(v).add(u); // Add reverse edge for undirected graph
+        }
+    }
+
+    // Get adjacency matrix
     public boolean[][] getAdjacencyMatrix() {
         return adjacencyMatrix;
     }
 
+    // Get adjacency list
     public List<List<Integer>> getAdjacencyList() {
         return adjacencyList;
     }
 
-    public int getNodes() {
-        return nodes;
-    }
-
-    public boolean isDirected() {
-        return directed;
-    }
-
-    public static graph generateRandomGraph(int nodes, double probability, boolean directed) {
-        graph graph = new graph(nodes, directed);
-        Random rand = new Random();
-        for (int i = 0; i < nodes; i++) {
-            for (int j = 0; j < nodes; j++) {
-                if (i != j && rand.nextDouble() < probability) {
-                    graph.addEdge(i, j);
-                }
+    // Print adjacency matrix
+    public void printAdjacencyMatrix() {
+        System.out.println("Adjacency Matrix:");
+        for (int i = 0; i < numNodes; i++) {
+            for (int j = 0; j < numNodes; j++) {
+                System.out.print(adjacencyMatrix[i][j] ? "1 " : "0 ");
             }
+            System.out.println();
         }
-        return graph;
+    }
+
+    // Print adjacency list
+    public void printAdjacencyList() {
+        System.out.println("Adjacency List:");
+        for (int i = 0; i < numNodes; i++) {
+            System.out.print(i + ": ");
+            for (int neighbor : adjacencyList.get(i)) {
+                System.out.print(neighbor + " ");
+            }
+            System.out.println();
+        }
     }
 }
